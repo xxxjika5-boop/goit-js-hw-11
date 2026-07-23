@@ -3,9 +3,6 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 import './css/loader.css';
 
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-
 
 import { getImagesByQuery } from './js/pixabay-api.js';
 import {
