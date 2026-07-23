@@ -34,35 +34,31 @@ function onFormSubmit(event) {
   showLoader();
   clearGallery();
 
-  getImagesByQuery(query)
-    .then(data => {
-      hideLoader();
-
-if (!data.hits || data.hits.length === 0) {
-
-    iziToast.error({
-      title: 'Error',
-      message:
-        'Sorry, there are no images matching your search query. Please try again!',
-      position: 'topRight',
-    });
-
-    return;
-}
-
-
-
-
-      createGallery(data.hits);
-    })
-    .catch(() => {
-      hideLoader();
+getImagesByQuery(query)
+  .then(data => {
+    if (!data.hits || data.hits.length === 0) {
       iziToast.error({
         title: 'Error',
-        message: 'Something went wrong. Please try again later.',
+        message:
+          'Sorry, there are no images matching your search query. Please try again!',
         position: 'topRight',
       });
+      return;
+    }
+
+    createGallery(data.hits);
+  })
+  .catch(() => {
+    iziToast.error({
+      title: 'Error',
+      message: 'Something went wrong. Please try again later.',
+      position: 'topRight',
     });
+  })
+  .finally(() => {
+    hideLoader(); // ← тепер завжди викликається
+  });
+
 
   // 🟢 ОЧИЩАЄМО ІНПУТ ПІСЛЯ ПОШУКУ
   formEl.reset();
